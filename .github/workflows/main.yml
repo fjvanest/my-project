@@ -19,10 +19,9 @@ jobs:
       - name: Run tests
         run: pytest
 
-
 deploy:
   needs: run-test
-    runs-on:  ubuntu-20.04
+    runs-on: ubuntu-20.04
     steps:
     - name: testing connection to Ocean Droplet
       uses: appleboy/ssh-action@master
