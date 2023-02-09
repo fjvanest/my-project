@@ -1,6 +1,9 @@
 name: Test and Deploy Workflow
 
-on: push
+on: 
+  push:
+    branches: [ master ]
+    
 jobs:
   run-test:
     runs-on: ubuntu-20.04
