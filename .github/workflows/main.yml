@@ -1,9 +1,8 @@
-name: Test and Deploy Workflow
+name: Run tests and deploy
 
-on: 
-  push:
-    branches: [ master ]
-    
+# Run this workflow whenever something new is pushed.
+on: push
+
 jobs:
   run-tests:
     runs-on: ubuntu-20.04
@@ -12,31 +11,26 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Python
         uses: actions/setup-python@v2
+        # Specify some input for this particular action
         with:
           python-version: '3.8.6'
       - name: Install Dependencies
         run: pip install -r requirements.txt
       - name: Run tests
         run: pytest
-
-deploy:
-  needs: run-tests
-    runs-on: ubuntu-20.04
-    steps:
-    - name: testing connection to Ocean Droplet
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.DIGITAL_OCEAN_IP_ADRESS }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd ~/my-project
-          echo 'cd to my-project'
-          git pull origin master
-          echo 'Repository has been pulled'
-          systemctl restart my-project
-          echo 'my-project rebooted'
-          git status
   
-
+  deploy:
+    needs: run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Flask app
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          script: |
+            pip install gunicorn flask
+            cd /home/winc-cd
+            git pull
+            systemctl restart winc-cd
