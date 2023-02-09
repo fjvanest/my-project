@@ -23,7 +23,7 @@ deploy:
     runs-on: ubuntu-20.04
     steps:
     - name: testing connection to Ocean Droplet
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v0.1.4
       with:
         host: ${{ secrets.DIGITAL_OCEAN_IP_ADRESS }}
         username: ${{ secrets.USERNAME }}
