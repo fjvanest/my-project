@@ -36,7 +36,7 @@ jobs:
         with:
           host: ${{ secrets.DIGITAL_OCEAN_IP_ADRESS }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.PUBLIC_KEY }}
           port: ${{ secrets.PORT }}
           script: |
             cd ~/my-project
