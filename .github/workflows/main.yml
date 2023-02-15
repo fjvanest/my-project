@@ -18,24 +18,24 @@ jobs:
       - name: Run tests
         run: pytest
 
-  deploy:
-    needs: run-tests
-    runs-on: ubuntu-20.04
-    steps:
-      - name: testing connection to Ocean Droplet
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.DIGITAL_OCEAN_IP_ADRESS }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd ~/my-project
-            echo 'cd to my-project'
-            git pull origin master
-            echo 'Repository has been pulled'
-            systemctl restart my-project
-            echo 'my-project rebooted'
-            git status
+  # deploy:
+  #   needs: run-tests
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: testing connection to Ocean Droplet
+  #       uses: appleboy/ssh-action@v0.1.4
+  #       with:
+  #         host: ${{ secrets.DIGITAL_OCEAN_IP_ADRESS }}
+  #         username: ${{ secrets.USERNAME }}
+  #         key: ${{ secrets.PRIVATE_KEY }}
+  #         port: ${{ secrets.PORT }}
+  #         script: |
+  #           cd ~/my-project
+  #           echo 'cd to my-project'
+  #           git pull origin master
+  #           echo 'Repository has been pulled'
+  #           systemctl restart my-project
+  #           echo 'my-project rebooted'
+  #           git status
   
 
