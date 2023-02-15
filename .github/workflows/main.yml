@@ -1,6 +1,6 @@
 name: Run tests and deploy
 
-# Run this workflow whene something new is pushed.
+# Run this workflow whene something new is pushed
 on: push
 
 jobs:
